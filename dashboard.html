@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>우상호 후보 캠프 대시보드</title>
+    <link rel="stylesheet" href="dashboard.css?v=3">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-wrapper">
+        <header class="header">
+            <div class="logo">
+                <h1>더불어민주당 <span>우상호</span> 후보 캠프</h1>
+                <p class="subtitle">강원특별자치도 선거 트렌드 분석 대시보드</p>
+            </div>
+            <div class="controls">
+                <div class="nav-buttons">
+                    <button id="btn-show-table" class="btn-nav">📋 상세 데이터 표</button>
+                </div>
+                <div class="region-filter">
+                    <label for="region-select">분석 지역 선택:</label>
+                    <select id="region-select">
+                        <!-- Options populated via JS -->
+                    </select>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Dashboard View -->
+        <div id="view-main" class="view-container active">
+            <main class="grid-container">
+                <section class="card main-chart-card">
+                    <div class="card-header">
+                        <h2>민주당 득표율 트렌드 (7회 지선 ➔ 8회 지선 ➔ 21대 대선)</h2>
+                    </div>
+                    <div class="canvas-container">
+                        <canvas id="trendChart"></canvas>
+                    </div>
+                </section>
+
+                <section class="card side-card">
+                    <div class="card-header">
+                        <h2>주요 선거 격차 분석 (상대 후보 대비)</h2>
+                    </div>
+                    <div class="stats-container" id="gapStats">
+                        <!-- Populated via JS -->
+                    </div>
+                </section>
+                
+                <section class="card bottom-card">
+                     <div class="card-header">
+                        <h2>선거별 양당 득표 비율 분포</h2>
+                    </div>
+                    <div class="bottom-charts">
+                         <div class="canvas-container mini">
+                            <canvas id="pieChart7"></canvas>
+                        </div>
+                         <div class="canvas-container mini">
+                            <canvas id="pieChart8"></canvas>
+                        </div>
+                         <div class="canvas-container mini">
+                            <canvas id="pieChart21"></canvas>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+
+        <!-- 상세 데이터 표 뷰 -->
+        <div id="view-table" class="view-container">
+            <div class="view-header">
+                <h2>강원특별자치도 시군별 상세 선거 데이터</h2>
+                <button class="btn-back">🔙 대시보드로 돌아가기</button>
+            </div>
+            <div class="card full-card" style="padding: 0; overflow: hidden;">
+                <div class="table-wrapper">
+                    <table id="dataTable">
+                        <thead>
+                            <tr>
+                                <th>지역명</th>
+                                <th>7회 지선 격차</th>
+                                <th>8회 지선 격차</th>
+                                <th>21대 대선 격차</th>
+                                <th>3개 선거 평균</th>
+                                <th>평균대비지수</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Populated via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script src="dashboard.js?v=3"></script>
+</body>
+</html>
