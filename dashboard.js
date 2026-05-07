@@ -57,25 +57,12 @@ function populateSelect() {
     });
 }
 
-function getStrategyBadge(avgIndex) {
-    if (avgIndex === null || avgIndex === undefined) return { text: '', class: '' };
-    if (avgIndex >= 53) return { text: '확보', class: 'badge-secure' };
-    if (avgIndex >= 50) return { text: '접전', class: 'badge-close' };
-    return { text: '공략', class: 'badge-target' };
-}
-
 function renderDashboard(regionName) {
     const region = dashboardData.find(r => r.name === regionName);
     if (!region) return;
 
     // Update Header Info
     document.getElementById('active-region-name').textContent = region.name;
-    const badgeInfo = getStrategyBadge(region.avg_index);
-    const badgeEl = document.getElementById('strategy-badge-main');
-    badgeEl.textContent = badgeInfo.text;
-    badgeEl.className = 'badge ' + badgeInfo.class;
-    if (!badgeInfo.text) badgeEl.style.display = 'none';
-    else badgeEl.style.display = 'inline-block';
 
     renderTrendChart(region);
     renderGapStats(region);
@@ -304,7 +291,6 @@ function renderDataTable() {
     });
 
     sortedData.forEach(r => {
-        const badgeInfo = getStrategyBadge(r.avg_index);
         const tr = document.createElement('tr');
         
         const formatGap = (val) => {
@@ -315,10 +301,7 @@ function renderDataTable() {
         };
 
         tr.innerHTML = `
-            <td>
-                <strong>${r.name}</strong> 
-                ${badgeInfo.text ? `<span class="badge ${badgeInfo.class}" style="font-size: 0.7rem; padding: 0.2rem 0.6rem; margin-left: 5px;">${badgeInfo.text}</span>` : ''}
-            </td>
+            <td><strong>${r.name}</strong></td>
             <td>${formatGap(r.elec7.gap)}</td>
             <td>${formatGap(r.elec8.gap)}</td>
             <td>${formatGap(r.pres21.gap)}</td>
