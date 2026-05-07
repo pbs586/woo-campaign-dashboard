@@ -46,6 +46,9 @@ async function init() {
         // Setup Table Sorting
         setupTableSorting();
 
+        // Setup Tooltips
+        setupTooltips();
+
     } catch (error) {
         console.error("Error loading data:", error);
     }
@@ -322,6 +325,34 @@ function renderDataTable() {
         });
         
         tbody.appendChild(tr);
+    });
+}
+
+// 툴팁: body에 직접 붙여서 overflow 영향 안 받음
+function setupTooltips() {
+    let tooltip = null;
+
+    document.querySelectorAll('.has-tooltip').forEach(el => {
+        el.addEventListener('mouseenter', (e) => {
+            const text = el.getAttribute('data-tooltip');
+            if (!text) return;
+
+            tooltip = document.createElement('div');
+            tooltip.className = 'custom-tooltip';
+            tooltip.textContent = text;
+            document.body.appendChild(tooltip);
+
+            const rect = el.getBoundingClientRect();
+            tooltip.style.top = (rect.bottom + 8) + 'px';
+            tooltip.style.left = Math.max(10, rect.left + rect.width / 2 - 140) + 'px';
+        });
+
+        el.addEventListener('mouseleave', () => {
+            if (tooltip) {
+                tooltip.remove();
+                tooltip = null;
+            }
+        });
     });
 }
 
