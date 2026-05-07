@@ -20,9 +20,13 @@ Chart.defaults.color = colors.textSecondary;
 Chart.defaults.font.family = "'Noto Sans KR', sans-serif";
 
 async function init() {
+    console.log("Initializing Dashboard...");
     try {
         const response = await fetch('election_data.json');
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        
         const data = await response.json();
+        console.log("Data loaded successfully:", data);
         dashboardData = data.regions;
 
         populateSelect();
