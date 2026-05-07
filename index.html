@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>우상호 후보 캠프 대시보드</title>
-    <link rel="stylesheet" href="dashboard.css?v=105">
+    <link rel="stylesheet" href="dashboard.css?v=110">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 </head>
@@ -12,8 +12,10 @@
     <div class="dashboard-wrapper">
         <header class="header">
             <div class="logo">
-                <h1>더불어민주당 <span>우상호</span> 후보 캠프</h1>
-                <p class="subtitle">강원특별자치도 선거 트렌드 분석 대시보드</p>
+                <a href="#" onclick="location.reload(); return false;" style="text-decoration: none; color: inherit;">
+                    <h1>더불어민주당 <span>우상호</span> 후보 캠프</h1>
+                    <p class="subtitle">강원특별자치도 선거 트렌드 분석 대시보드</p>
+                </a>
             </div>
             <nav class="tabs">
                 <button id="tab-main" class="tab-btn active" data-view="view-main">📊 대시보드</button>
@@ -105,6 +107,6 @@
         </div>
 
     </div>
-    <script src="dashboard.js?v=105"></script>
+    <script src="dashboard.js?v=110"></script>
 </body>
 </html>
