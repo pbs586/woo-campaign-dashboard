@@ -215,8 +215,8 @@ function createPieChart(canvasId, title, minjooData, opposingData, minjooLabel, 
                     display: true,
                     text: title,
                     color: colors.textPrimary,
-                    font: { size: 14, weight: 'bold' },
-                    padding: { bottom: 10 }
+                    font: { size: 12, weight: 'bold' },
+                    padding: { bottom: 5 }
                 }
             }
         }
