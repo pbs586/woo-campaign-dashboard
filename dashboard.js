@@ -3,7 +3,7 @@ let trendChartInstance = null;
 let pie7Instance = null;
 let pie8Instance = null;
 let pie21Instance = null;
-let currentSort = { key: 'name', ascending: true };
+let currentSort = { key: 'original', ascending: true };
 
 const colors = {
     minjoo: '#2563eb', // Solid Blue
@@ -283,19 +283,25 @@ function renderDataTable() {
     const tbody = document.querySelector('#dataTable tbody');
     tbody.innerHTML = '';
 
-    const sortedData = [...dashboardData].sort((a, b) => {
-        let valA = getNestedValue(a, currentSort.key);
-        let valB = getNestedValue(b, currentSort.key);
-        
-        // Handle nulls
-        if (valA === null) return 1;
-        if (valB === null) return -1;
-        
-        if (typeof valA === 'string') {
-            return currentSort.ascending ? valA.localeCompare(valB) : valB.localeCompare(valA);
-        }
-        return currentSort.ascending ? valA - valB : valB - valA;
-    });
+    // 기본 정렬: 원본 순서(엑셀 순서) 유지
+    let sortedData;
+    if (currentSort.key === 'original') {
+        sortedData = [...dashboardData];
+    } else {
+        sortedData = [...dashboardData].sort((a, b) => {
+            let valA = getNestedValue(a, currentSort.key);
+            let valB = getNestedValue(b, currentSort.key);
+            
+            // Handle nulls
+            if (valA === null) return 1;
+            if (valB === null) return -1;
+            
+            if (typeof valA === 'string') {
+                return currentSort.ascending ? valA.localeCompare(valB) : valB.localeCompare(valA);
+            }
+            return currentSort.ascending ? valA - valB : valB - valA;
+        });
+    }
 
     sortedData.forEach(r => {
         const tr = document.createElement('tr');
