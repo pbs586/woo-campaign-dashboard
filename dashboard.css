@@ -122,20 +122,27 @@ body {
     justify-content: space-between;
     align-items: center;
     background: #ffffff;
-    padding: 0.8rem 1.5rem;
-    border-radius: 16px;
+    padding: 0.5rem 1.2rem;
+    border-radius: 12px;
     border: 1px solid var(--border-color);
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.05);
 }
 
-.current-focus { display: flex; align-items: center; gap: 0.6rem; }
-.current-focus #active-region-name { font-size: 1.4rem; font-weight: 900; }
+.current-focus { display: flex; align-items: center; gap: 0.5rem; }
+.current-focus #active-region-name { font-size: 1.2rem; font-weight: 800; }
+
+.region-filter label {
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: var(--text-secondary);
+}
 
 #region-select {
-    padding: 0.4rem 0.8rem;
-    border-radius: 8px;
-    border: 2px solid var(--border-color);
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
     font-family: inherit;
+    font-size: 0.9rem;
     font-weight: 600;
 }
 
@@ -149,17 +156,17 @@ body {
 
 .card {
     background: var(--card-bg);
-    border-radius: 20px;
+    border-radius: 15px;
     border: 1px solid var(--border-color);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
 }
 
 .card-header h2 {
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 800;
-    margin-bottom: 1rem;
-    border-left: 5px solid var(--minjoo-light);
-    padding-left: 0.8rem;
+    margin-bottom: 0.8rem;
+    border-left: 4px solid var(--minjoo-light);
+    padding-left: 0.6rem;
 }
 
 .canvas-container { width: 100%; position: relative; }
@@ -171,8 +178,26 @@ body {
     height: 100%;
 }
 
-.stats-container { display: flex; flex-direction: column; gap: 0.8rem; height: 100%; justify-content: space-around; }
-.stat-item { background: #f8fafc; padding: 0.6rem 1rem; border-radius: 12px; border: 1px solid var(--border-color); }
+.stats-container { 
+    display: flex; 
+    flex-direction: column; 
+    height: 100%; 
+    justify-content: space-between; 
+    padding: 0.5rem 0;
+}
+
+.stat-item { 
+    background: #f8fafc; 
+    padding: 1rem; 
+    border-radius: 10px; 
+    border: 1px solid var(--border-color);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+}
+.stat-item:last-child { margin-bottom: 0; }
 .stat-title { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.2rem; font-weight: 600; }
 .stat-gap { font-size: 1.6rem; font-weight: 900; }
 
