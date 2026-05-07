@@ -124,6 +124,32 @@ body {
     gap: 0.6rem;
 }
 
+/* PC: 모니터 크기에 맞춰 꽉 차게 */
+@media (min-width: 1025px) {
+    .dashboard-wrapper {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .view-container.active {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+    }
+
+    .grid-container {
+        flex: 1;
+        grid-template-rows: 1fr 1fr;
+        min-height: 0;
+    }
+
+    .card {
+        min-height: 0;
+    }
+}
+
 /* 우측 카드: 세로 2칸 차지 → 좌측 두 카드 합친 높이와 동일 */
 .side-card {
     grid-row: 1 / 3;
