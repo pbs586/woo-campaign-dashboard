@@ -86,7 +86,7 @@ function renderTrendChart(region) {
     trendChartInstance = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: ['7회 지선', '8회 지선', '21대 대선'],
+            labels: ["7회 지선 '18", "8회 지선 '22", "21대 대선 '25"],
             datasets: [{
                 label: '민주당 득표율',
                 data: [region.elec7.choi, region.elec8.lee_gj, region.pres21.lee_jm],
@@ -152,9 +152,9 @@ function renderGapStats(region) {
     const container = document.getElementById('gapStats');
 
     const stats = [
-        { title: '7회 지선 격차', gap: region.elec7.gap },
-        { title: '8회 지선 격차', gap: region.elec8.gap },
-        { title: '21대 대선 격차', gap: region.pres21.gap }
+        { title: "7회 지선 격차 '18", gap: region.elec7.gap },
+        { title: "8회 지선 격차 '22", gap: region.elec8.gap },
+        { title: "21대 대선 격차 '25", gap: region.pres21.gap }
     ];
 
     container.innerHTML = stats.map(stat => {
@@ -231,9 +231,9 @@ function renderPieCharts(region) {
     if (pie8Instance) pie8Instance.destroy();
     if (pie21Instance) pie21Instance.destroy();
 
-    pie7Instance = createPieChart('pieChart7', '7회 지선', region.elec7.choi, region.elec7.jung, '최문순', '정창수');
-    pie8Instance = createPieChart('pieChart8', '8회 지선', region.elec8.lee_gj, region.elec8.kim_jt, '이광재', '김진태');
-    pie21Instance = createPieChart('pieChart21', '21대 대선', region.pres21.lee_jm, region.pres21.kim_ms, '이재명', '김문수');
+    pie7Instance = createPieChart('pieChart7', "7회 지선 '18", region.elec7.choi, region.elec7.jung, '최문순', '정창수');
+    pie8Instance = createPieChart('pieChart8', "8회 지선 '22", region.elec8.lee_gj, region.elec8.kim_jt, '이광재', '김진태');
+    pie21Instance = createPieChart('pieChart21', "21대 대선 '25", region.pres21.lee_jm, region.pres21.kim_ms, '이재명', '김문수');
 }
 
 // --- Navigation & Interactive Logic ---
