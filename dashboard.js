@@ -319,7 +319,12 @@ function renderDataTable() {
             <td>${formatGap(r.elec8.gap)}</td>
             <td>${formatGap(r.pres21.gap)}</td>
             <td>${(r.avg_index ? r.avg_index.toFixed(2) + '%' : '-')}</td>
-            <td>${(r.priority ? r.priority.toFixed(3) : '-')}</td>
+            <td>${r.priority != null ? (() => {
+                const isPos = r.priority > 0;
+                const cls = isPos ? 'positive-cell' : 'negative-cell';
+                const sign = isPos ? '+' : '';
+                return `<span class="${cls}">${sign}${r.priority.toFixed(3)}</span>`;
+            })() : '-'}</td>
         `;
         
         // Add click interaction: Jump to Dashboard for this region
