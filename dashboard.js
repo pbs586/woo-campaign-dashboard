@@ -89,12 +89,12 @@ function renderTrendChart(region) {
                 data: [region.elec7.choi, region.elec8.lee_gj, region.pres21.lee_jm],
                 borderColor: colors.minjoo,
                 backgroundColor: colors.minjooBg,
-                borderWidth: 4,
+                borderWidth: 2,
                 pointBackgroundColor: '#ffffff',
                 pointBorderColor: colors.minjoo,
-                pointBorderWidth: 3,
-                pointRadius: 6,
-                pointHoverRadius: 8,
+                pointBorderWidth: 2,
+                pointRadius: 4,
+                pointHoverRadius: 6,
                 fill: true,
                 tension: 0.4
             }]
