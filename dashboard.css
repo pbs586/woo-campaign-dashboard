@@ -132,18 +132,20 @@ body {
 .current-focus #active-region-name { font-size: 1.2rem; font-weight: 800; }
 
 .region-filter label {
-    font-size: 0.85rem;
-    font-weight: 300;
-    color: var(--text-secondary);
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-right: 0.5rem;
 }
 
 #region-select {
-    padding: 0.3rem 0.6rem;
-    border-radius: 6px;
-    border: 1px solid var(--border-color);
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    border: 2px solid var(--border-color);
     font-family: inherit;
-    font-size: 0.9rem;
-    font-weight: 600;
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--minjoo-light);
 }
 
 .view-container { display: none; width: 100%; }
@@ -162,11 +164,11 @@ body {
 }
 
 .card-header h2 {
-    font-size: 0.95rem;
+    font-size: 1.1rem;
     font-weight: 800;
-    margin-bottom: 0.8rem;
-    border-left: 4px solid var(--minjoo-light);
-    padding-left: 0.6rem;
+    margin-bottom: 1rem;
+    border-left: 5px solid var(--minjoo-light);
+    padding-left: 0.8rem;
 }
 
 .canvas-container { width: 100%; position: relative; }
@@ -182,24 +184,40 @@ body {
     display: flex; 
     flex-direction: column; 
     height: 100%; 
-    justify-content: space-between; 
-    padding: 0.5rem 0;
+    gap: 0.8rem;
+    padding: 0.2rem 0;
 }
 
 .stat-item { 
     background: #f8fafc; 
-    padding: 1rem; 
-    border-radius: 10px; 
+    padding: 2rem 1.5rem; 
+    border-radius: 12px; 
     border: 1px solid var(--border-color);
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin-bottom: 0.5rem;
+    transition: all 0.2s ease;
 }
-.stat-item:last-child { margin-bottom: 0; }
-.stat-title { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.2rem; font-weight: 600; }
-.stat-gap { font-size: 1.6rem; font-weight: 900; }
+
+.stat-item:hover {
+    background: #ffffff;
+    border-color: var(--minjoo-light);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.stat-title { 
+    font-size: 1rem; 
+    color: var(--text-secondary); 
+    margin-bottom: 0.6rem; 
+    font-weight: 700; 
+}
+
+.stat-gap { 
+    font-size: 2.2rem; 
+    font-weight: 900; 
+    letter-spacing: -1px;
+}
 
 .gap-positive { color: var(--minjoo-light); }
 .gap-negative { color: var(--accent-red); }
