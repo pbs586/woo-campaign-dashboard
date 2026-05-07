@@ -15,25 +15,33 @@
                 <h1>더불어민주당 <span>우상호</span> 후보 캠프</h1>
                 <p class="subtitle">강원특별자치도 선거 트렌드 분석 대시보드</p>
             </div>
-            <div class="controls">
-                <div class="nav-buttons">
-                    <button id="btn-show-table" class="btn-nav">📋 상세 데이터 표</button>
-                </div>
-                <div class="region-filter">
-                    <label for="region-select">분석 지역 선택:</label>
-                    <select id="region-select">
-                        <!-- Options populated via JS -->
-                    </select>
-                </div>
-            </div>
+            <nav class="tabs">
+                <button id="tab-main" class="tab-btn active" data-view="view-main">📊 대시보드</button>
+                <button id="tab-table" class="tab-btn" data-view="view-table">📋 상세 데이터</button>
+            </nav>
         </header>
+
+        <!-- New Region Selection Bar -->
+        <div class="selection-bar">
+            <div class="current-focus">
+                <span class="icon">📍</span> 
+                <span id="active-region-name">합계(도)</span> 
+                <span id="strategy-badge-main" class="badge"></span>
+            </div>
+            <div class="region-filter">
+                <label for="region-select">분석 지역 변경:</label>
+                <select id="region-select">
+                    <!-- Options populated via JS -->
+                </select>
+            </div>
+        </div>
 
         <!-- Main Dashboard View -->
         <div id="view-main" class="view-container active">
             <main class="grid-container">
                 <section class="card main-chart-card">
                     <div class="card-header">
-                        <h2>민주당 득표율 트렌드 (7회 지선 ➔ 8회 지선 ➔ 21대 대선)</h2>
+                        <h2>민주당 득표율 트렌드</h2>
                     </div>
                     <div class="canvas-container">
                         <canvas id="trendChart"></canvas>
@@ -42,7 +50,7 @@
 
                 <section class="card side-card">
                     <div class="card-header">
-                        <h2>주요 선거 격차 분석 (상대 후보 대비)</h2>
+                        <h2>주요 선거 격차 분석</h2>
                     </div>
                     <div class="stats-container" id="gapStats">
                         <!-- Populated via JS -->
@@ -72,19 +80,24 @@
         <div id="view-table" class="view-container">
             <div class="view-header">
                 <h2>강원특별자치도 시군별 상세 선거 데이터</h2>
-                <button class="btn-back">🔙 대시보드로 돌아가기</button>
+                <div class="table-legend">
+                    <span class="badge badge-secure">확보</span>
+                    <span class="badge badge-close">접전</span>
+                    <span class="badge badge-target">공략</span>
+                    <small>* 지역명 클릭 시 상세 대시보드로 이동합니다.</small>
+                </div>
             </div>
             <div class="card full-card" style="padding: 0; overflow: hidden;">
                 <div class="table-wrapper">
                     <table id="dataTable">
                         <thead>
                             <tr>
-                                <th>지역명</th>
-                                <th>7회 지선 격차</th>
-                                <th>8회 지선 격차</th>
-                                <th>21대 대선 격차</th>
-                                <th>3개 선거 평균</th>
-                                <th>평균대비지수</th>
+                                <th data-sort="name">지역명 ↕</th>
+                                <th data-sort="elec7.gap">7회 격차 ↕</th>
+                                <th data-sort="elec8.gap">8회 격차 ↕</th>
+                                <th data-sort="pres21.gap">21대 격차 ↕</th>
+                                <th data-sort="avg_index">3개 평균 ↕</th>
+                                <th data-sort="priority">평균대비지수 ↕</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -95,7 +108,12 @@
             </div>
         </div>
 
+        <footer class="footer">
+            <p>© 2026 더불어민주당 우상호 강원특별자치도지사 후보 캠프 | 데이터 출처: 중앙선거관리위원회 선거통계시스템</p>
+            <p>최종 업데이트: 2026. 05. 07.</p>
+        </footer>
+
     </div>
-    <script src="dashboard.js?v=3"></script>
+    <script src="dashboard.js?v=4"></script>
 </body>
 </html>

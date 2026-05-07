@@ -3,6 +3,7 @@ let trendChartInstance = null;
 let pie7Instance = null;
 let pie8Instance = null;
 let pie21Instance = null;
+let currentSort = { key: 'name', ascending: true };
 
 const colors = {
     minjoo: '#2563eb', // Solid Blue
@@ -35,8 +36,11 @@ async function init() {
             renderDashboard(e.target.value);
         });
 
-        // Setup View Switchers
-        setupViewSwitchers();
+        // Setup View Switchers (Tabs)
+        setupTabs();
+        
+        // Setup Table Sorting
+        setupTableSorting();
 
     } catch (error) {
         console.error("Error loading data:", error);
@@ -53,9 +57,25 @@ function populateSelect() {
     });
 }
 
+function getStrategyBadge(avgIndex) {
+    if (avgIndex === null || avgIndex === undefined) return { text: '', class: '' };
+    if (avgIndex >= 53) return { text: '확보', class: 'badge-secure' };
+    if (avgIndex >= 50) return { text: '접전', class: 'badge-close' };
+    return { text: '공략', class: 'badge-target' };
+}
+
 function renderDashboard(regionName) {
     const region = dashboardData.find(r => r.name === regionName);
     if (!region) return;
+
+    // Update Header Info
+    document.getElementById('active-region-name').textContent = region.name;
+    const badgeInfo = getStrategyBadge(region.avg_index);
+    const badgeEl = document.getElementById('strategy-badge-main');
+    badgeEl.textContent = badgeInfo.text;
+    badgeEl.className = 'badge ' + badgeInfo.class;
+    if (!badgeInfo.text) badgeEl.style.display = 'none';
+    else badgeEl.style.display = 'inline-block';
 
     renderTrendChart(region);
     renderGapStats(region);
@@ -72,7 +92,7 @@ function renderTrendChart(region) {
     trendChartInstance = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: ['7회 지선 (최문순)', '8회 지선 (이광재)', '21대 대선 (이재명)'],
+            labels: ['7회 지선', '8회 지선', '21대 대선'],
             datasets: [{
                 label: '민주당 득표율',
                 data: [region.elec7.choi, region.elec8.lee_gj, region.pres21.lee_jm],
@@ -85,7 +105,7 @@ function renderTrendChart(region) {
                 pointRadius: 6,
                 pointHoverRadius: 8,
                 fill: true,
-                tension: 0.4 // Smooth curves
+                tension: 0.4
             }]
         },
         options: {
@@ -129,10 +149,6 @@ function renderTrendChart(region) {
                         font: { size: 14, weight: '500' }
                     }
                 }
-            },
-            animation: {
-                duration: 1500,
-                easing: 'easeOutQuart'
             }
         }
     });
@@ -142,9 +158,9 @@ function renderGapStats(region) {
     const container = document.getElementById('gapStats');
 
     const stats = [
-        { title: '7회 지선 격차 (최문순 vs 정창수)', gap: region.elec7.gap },
-        { title: '8회 지선 격차 (이광재 vs 김진태)', gap: region.elec8.gap },
-        { title: '21대 대선 격차 (이재명 vs 김문수)', gap: region.pres21.gap }
+        { title: '7회 지선 격차', gap: region.elec7.gap },
+        { title: '8회 지선 격차', gap: region.elec8.gap },
+        { title: '21대 대선 격차', gap: region.pres21.gap }
     ];
 
     container.innerHTML = stats.map(stat => {
@@ -210,19 +226,7 @@ function createPieChart(canvasId, title, minjooData, opposingData, minjooLabel, 
                     color: colors.textPrimary,
                     font: { size: 14, weight: 'bold' },
                     padding: { bottom: 10 }
-                },
-                tooltip: {
-                    callbacks: {
-                        label: function (context) {
-                            return ` ${context.label}: ${context.parsed.toFixed(1)}%`;
-                        }
-                    }
                 }
-            },
-            animation: {
-                animateScale: true,
-                animateRotate: true,
-                duration: 1000
             }
         }
     });
@@ -238,12 +242,18 @@ function renderPieCharts(region) {
     pie21Instance = createPieChart('pieChart21', '21대 대선', region.pres21.lee_jm, region.pres21.kim_ms, '이재명', '김문수');
 }
 
-// --- New View Logic ---
-function setupViewSwitchers() {
-    document.getElementById('btn-show-table').addEventListener('click', () => switchView('view-table'));
+// --- Navigation & Interactive Logic ---
 
-    document.querySelectorAll('.btn-back').forEach(btn => {
-        btn.addEventListener('click', () => switchView('view-main'));
+function setupTabs() {
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const viewId = btn.getAttribute('data-view');
+            switchView(viewId);
+            
+            // Update active tab styling
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        });
     });
 }
 
@@ -256,16 +266,47 @@ function switchView(viewId) {
     }
 }
 
+function setupTableSorting() {
+    document.querySelectorAll('#dataTable th').forEach(th => {
+        th.addEventListener('click', () => {
+            const key = th.getAttribute('data-sort');
+            if (currentSort.key === key) {
+                currentSort.ascending = !currentSort.ascending;
+            } else {
+                currentSort.key = key;
+                currentSort.ascending = true;
+            }
+            renderDataTable();
+        });
+    });
+}
 
+function getNestedValue(obj, path) {
+    return path.split('.').reduce((prev, curr) => prev ? prev[curr] : null, obj);
+}
 
 function renderDataTable() {
     const tbody = document.querySelector('#dataTable tbody');
     tbody.innerHTML = '';
 
-    const regions = dashboardData.slice();
+    const sortedData = [...dashboardData].sort((a, b) => {
+        let valA = getNestedValue(a, currentSort.key);
+        let valB = getNestedValue(b, currentSort.key);
+        
+        // Handle nulls
+        if (valA === null) return 1;
+        if (valB === null) return -1;
+        
+        if (typeof valA === 'string') {
+            return currentSort.ascending ? valA.localeCompare(valB) : valB.localeCompare(valA);
+        }
+        return currentSort.ascending ? valA - valB : valB - valA;
+    });
 
-    regions.forEach(r => {
+    sortedData.forEach(r => {
+        const badgeInfo = getStrategyBadge(r.avg_index);
         const tr = document.createElement('tr');
+        
         const formatGap = (val) => {
             const isPos = val > 0;
             const cls = isPos ? 'positive-cell' : 'negative-cell';
@@ -274,16 +315,27 @@ function renderDataTable() {
         };
 
         tr.innerHTML = `
-            <td><strong>${r.name}</strong></td>
+            <td>
+                <strong>${r.name}</strong> 
+                ${badgeInfo.text ? `<span class="badge ${badgeInfo.class}" style="font-size: 0.7rem; padding: 0.2rem 0.6rem; margin-left: 5px;">${badgeInfo.text}</span>` : ''}
+            </td>
             <td>${formatGap(r.elec7.gap)}</td>
             <td>${formatGap(r.elec8.gap)}</td>
             <td>${formatGap(r.pres21.gap)}</td>
             <td>${(r.avg_index ? r.avg_index.toFixed(2) + '%' : '-')}</td>
             <td>${(r.priority ? r.priority.toFixed(3) : '-')}</td>
         `;
+        
+        // Add click interaction: Jump to Dashboard for this region
+        tr.addEventListener('click', () => {
+            document.getElementById('region-select').value = r.name;
+            renderDashboard(r.name);
+            document.getElementById('tab-main').click(); // Switch to dashboard tab
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        
         tbody.appendChild(tr);
     });
 }
 
-// Initialize on load
 window.addEventListener('DOMContentLoaded', init);
