@@ -269,6 +269,17 @@ th, td { padding: 0.8rem 1rem; text-align: left; border-bottom: 1px solid var(--
 th { background: #f8fafc; font-weight: 700; cursor: pointer; position: sticky; top: 0; }
 tbody tr:hover { background: #f1f5f9; cursor: pointer; }
 
+/* 상세 데이터 표: 플러스는 빨강, 마이너스는 파랑 */
+.positive-cell {
+    color: #dc2626;
+    font-weight: 800;
+}
+
+.negative-cell {
+    color: #2563eb;
+    font-weight: 800;
+}
+
 /* ===== 모바일 대응 ===== */
 @media (max-width: 1024px) {
     .grid-container {
