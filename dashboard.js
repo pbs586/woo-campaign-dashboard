@@ -31,8 +31,8 @@ async function init() {
 
         populateSelect();
 
-        // Initial render with '합계(도)' or first item
-        const initialRegion = dashboardData.find(r => r.name.includes('합계')) || dashboardData[0];
+        // Initial render with '전체' or first item
+        const initialRegion = dashboardData.find(r => r.name.includes('전체')) || dashboardData[0];
         document.getElementById('region-select').value = initialRegion.name;
         renderDashboard(initialRegion.name);
 
